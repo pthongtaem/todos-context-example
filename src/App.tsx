@@ -37,8 +37,6 @@ const PrivateRoute: React.FC<{ path: string; exact?: boolean }> = ({
   ...rest
 }) => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  console.log('don');
-  console.log(isLoggedIn);
 
   return (
     <Route
