@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addTodo } from '../../../reducers/todos';
 import { Button, Input } from 'antd';
+import { useTodosContext, addTodo } from '../../../context/TodosContext';
 
 const AddTodo = () => {
   const [value, setValue] = useState('');
-  const dispatch = useDispatch();
+  const { dispatch } = useTodosContext();
 
   return (
     <div>
@@ -18,7 +17,7 @@ const AddTodo = () => {
         type="primary"
         onClick={() => {
           if (value.trim()) {
-            dispatch(addTodo(value));
+            dispatch!(addTodo(value));
             setValue('');
           }
         }}

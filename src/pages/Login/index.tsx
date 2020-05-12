@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { loginSuccess } from '../../reducers/auth';
+import { useAuthContext, loginSuccess } from '../../context/AuthContext';
 
 const layout = {
   labelCol: { span: 8 },
@@ -14,13 +13,13 @@ const tailLayout = {
 
 const Login = () => {
   let history = useHistory();
-  const dispatch = useDispatch();
+  const { dispatch } = useAuthContext();
   const [loading, setLoading] = useState(false);
 
   const onFinish = (values: any) => {
     setLoading(true);
     console.log('Success:', values);
-    dispatch(loginSuccess(values.username));
+    dispatch!(loginSuccess(values.username));
     history.replace('/todos');
   };
 

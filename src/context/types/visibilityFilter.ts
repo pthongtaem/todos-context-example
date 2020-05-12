@@ -1,5 +1,5 @@
 export const SET_VISIBILITY_FILTER =
-  'todos-redux-example/visibilityFilter/SET_VISIBILITY_FILTER';
+  'todos-context-example/visibilityFilter/SET_VISIBILITY_FILTER';
 
 export interface TodosState {
   id: number;
@@ -18,4 +18,4 @@ export interface SetVisibilityFilterAction {
   payloads: { filter: VisibilityFilters };
 }
 
-export type VisibilityFilterTypes = SetVisibilityFilterAction;
+export type VisibilityFilterActionTypes = SetVisibilityFilterAction;

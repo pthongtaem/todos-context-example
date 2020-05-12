@@ -1,5 +1,5 @@
-export const ADD_TODO = 'todos-redux-example/todos/ADD_TODO';
-export const TOGGLE_TODO = 'todos-redux-example/todos/TOGGLE_TODO';
+export const ADD_TODO = 'todos-context-example/todos/ADD_TODO';
+export const TOGGLE_TODO = 'todos-context-example/todos/TOGGLE_TODO';
 
 export interface TodosState {
   id: number;

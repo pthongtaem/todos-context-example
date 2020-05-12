@@ -1,12 +1,9 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import Todo from './Todo';
-import {
-  VisibilityFilters,
-  TodosState,
-} from '../../../reducers/types/visibilityFilter';
-import { RootState } from '../../../reducers';
-import { toggleTodo } from '../../../reducers/todos';
+import { useTodosContext, toggleTodo } from '../../../context/TodosContext';
+import { useVisibilityFilterContext } from '../../../context/VisibilityFilterContext';
+import { TodosState } from '../../../context/types/todos';
+import { VisibilityFilters } from '../../../context/types/visibilityFilter';
 
 const getVisibleTodos = (todos: TodosState[], filter: VisibilityFilters) => {
   switch (filter) {
@@ -22,10 +19,10 @@ const getVisibleTodos = (todos: TodosState[], filter: VisibilityFilters) => {
 };
 
 const TodoList = () => {
-  const todos = useSelector((state: RootState) =>
-    getVisibleTodos(state.todos, state.visibilityFilter),
-  );
-  const dispatch = useDispatch();
+  const { items, dispatch: todoDispatch } = useTodosContext();
+  const { visibilityFilter } = useVisibilityFilterContext();
+
+  const todos = getVisibleTodos(items!, visibilityFilter!);
 
   return (
     <ul>
@@ -33,7 +30,7 @@ const TodoList = () => {
         <Todo
           key={todo.id}
           {...todo}
-          onClick={() => dispatch(toggleTodo(todo.id))}
+          onClick={() => todoDispatch!(toggleTodo(todo.id))}
         />
       ))}
     </ul>

@@ -1,7 +1,7 @@
 // Actions
-export const LOGIN_SUCCESS = 'todos/auth/LOGIN_SUCCESS';
-export const LOGIN_FAIL = 'todos/auth/LOGIN_FAIL';
-export const LOGOUT = 'todos/auth/LOGOUT';
+export const LOGIN_SUCCESS = 'todos-context-example/auth/LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'todos-context-example/auth/LOGIN_FAIL';
+export const LOGOUT = 'todos-context-example/auth/LOGOUT';
 
 export interface AuthState {
   isLoggedIn: boolean;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Provider, useSelector, useDispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
   Switch,
@@ -7,24 +6,25 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { Layout, Button } from 'antd';
-import store from './store';
 import Todos from './pages/Todos';
 import Login from './pages/Login';
-import { RootState } from './reducers';
-import { logout } from './reducers/auth';
+import { AuthProvider, useAuthContext, logout } from './context/AuthContext';
+import { TodosProvider } from './context/TodosContext';
+import { VisibilityFilterProvider } from './context/VisibilityFilterContext';
 
 const { Header, Content } = Layout;
 
 const Greeting = () => {
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  const name = useSelector((state: RootState) => state.auth.name);
-  const dispatch = useDispatch();
+  const { auth, dispatch } = useAuthContext();
+
+  const isLoggedIn = auth?.isLoggedIn;
+  const name = auth?.name;
 
   if (isLoggedIn)
     return (
       <p>
         Hello, {name}!{' '}
-        <Button size="small" onClick={e => dispatch(logout())}>
+        <Button size="small" onClick={e => dispatch!(logout())}>
           Logout
         </Button>
       </p>
@@ -36,7 +36,8 @@ const PrivateRoute: React.FC<{ path: string; exact?: boolean }> = ({
   children,
   ...rest
 }) => {
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const { auth } = useAuthContext();
+  const isLoggedIn = auth?.isLoggedIn;
 
   return (
     <Route
@@ -59,7 +60,7 @@ const PrivateRoute: React.FC<{ path: string; exact?: boolean }> = ({
 
 const App = () => {
   return (
-    <Provider store={store}>
+    <AuthProvider>
       <Router>
         <Layout>
           <Header style={{ background: '#ffffff' }}>
@@ -68,7 +69,11 @@ const App = () => {
           <Content style={{ background: '#ffffff', padding: '0 50px' }}>
             <Switch>
               <PrivateRoute path="/todos" exact>
-                <Todos />
+                <TodosProvider>
+                  <VisibilityFilterProvider>
+                    <Todos />
+                  </VisibilityFilterProvider>
+                </TodosProvider>
               </PrivateRoute>
               <Route path="/" exact>
                 <Login />
@@ -77,7 +82,7 @@ const App = () => {
           </Content>
         </Layout>
       </Router>
-    </Provider>
+    </AuthProvider>
   );
 };
 
